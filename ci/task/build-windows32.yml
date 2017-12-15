@@ -11,7 +11,7 @@ inputs:
 - name: concourse
 
 outputs:
-- name: binary
+- name: binary-out
 
 run:
   path: build-fly-windows32/ci/task/build-windows32

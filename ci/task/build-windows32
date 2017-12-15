@@ -5,11 +5,15 @@ set -e -x
 export GOPATH=$PWD/concourse
 export PATH=$PWD/concourse/bin:$PATH
 
-final_version="3.8.0"
+final_version=$(cat $PWD/concourse/.git/ref | cut -c 2-)
 platform="windows"
 arch="386"
 
+cp $PWD/concourse/.git/ref $PWD/binary-out/version
+
+mkdir -p $PWD/binary-out/bin
+
 go build \
   -ldflags "-X github.com/concourse/fly/version.Version=${final_version}" \
-  -o "$PWD/binary/fly_${platform}_${arch}"  \
+  -o "$PWD/binary-out/bin/fly_${platform}_${arch}"  \
   github.com/concourse/fly

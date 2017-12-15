@@ -1,0 +1,27 @@
+resources:
+- name: concourse-repos
+  type: git
+  source:
+    uri: https://github.com/concourse/concourse.git
+    tag_filter: v3.8.0
+
+- name: build-windows-repos
+  type: git
+  source:
+    uri: https://github.com/shinji62/build-fly-windows32.git
+    branch: master
+
+
+
+
+jobs:
+- name: build-fly-command
+  plan:
+    - aggregate:
+      - get: concourse
+        resource: concourse-repos
+      - get: build-fly-windows32
+        resource: build-windows-repos
+      - get: fly-release-repo
+    - task: build-cli
+      file: build-fly-windows32/ci/task/build-windows32.yml
