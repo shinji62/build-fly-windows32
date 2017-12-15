@@ -1,0 +1,15 @@
+#!/bin/bash
+# vim: set ft=sh
+set -e -x
+
+export GOPATH=$PWD/concourse
+export PATH=$PWD/concourse/bin:$PATH
+
+final_version="3.8.0"
+platform="windows"
+arch="386"
+
+go build \
+  -ldflags "-X github.com/concourse/fly/version.Version=${final_version}" \
+  -o "$PWD/binary/fly_${platform}_${arch}"  \
+  github.com/concourse/fly
